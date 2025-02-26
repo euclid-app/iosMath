@@ -18,24 +18,26 @@ let package = Package(
             name: "iosMath",
             path: "iosMath",
             exclude: [
-                "render/MTFontManager.m",  // 如需要排除
+                "render/MTFontManager.m",
                 "info.plist",
                 "lib/iosMath-prefix.pch"
             ],
             resources: [
                 .copy("font")
             ],
-            publicHeadersPath: "include",  // 将公共头文件路径改为include
+            publicHeadersPath: "lib",  // 保留原有设置
             cSettings: [
-                // 扩展头文件搜索路径，确保所有可能的目录都被包含
+                // 全面的头文件搜索路径配置
                 .headerSearchPath("."),
+                .headerSearchPath("../"),  // 添加上层目录
                 .headerSearchPath("lib"),
                 .headerSearchPath("render"),
-                .headerSearchPath("render/internal"),
+                .headerSearchPath("render/internal"),  // 确保这条路径正确
                 .headerSearchPath("font"),
                 .headerSearchPath("include"),
                 .headerSearchPath("include/render"),
-                .headerSearchPath("include/render/internal")
+                .headerSearchPath("include/render/internal"),
+                .unsafeFlags(["-I../iosMath/render/internal"])  // 添加额外安全路径
             ]
         )
     ],
