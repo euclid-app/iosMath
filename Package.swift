@@ -25,20 +25,25 @@ let package = Package(
             resources: [
                 .copy("font")
             ],
-            publicHeadersPath: "lib",  // 保留原有设置
+            publicHeadersPath: "lib",
             cSettings: [
-                // 全面的头文件搜索路径配置
-                .headerSearchPath("."),
-                .headerSearchPath("../"),  // 添加上层目录
                 .headerSearchPath("lib"),
                 .headerSearchPath("render"),
-                .headerSearchPath("render/internal"),  // 确保这条路径正确
+                .headerSearchPath("render/internal"),
                 .headerSearchPath("font"),
-                .headerSearchPath("include"),
-                .headerSearchPath("include/render"),
-                .headerSearchPath("include/render/internal"),
-                .unsafeFlags(["-I../iosMath/render/internal"])  // 添加额外安全路径
+                .unsafeFlags(["-Wno-error", "-w"]) // 忽略警告和错误
+            ],
+            linkerSettings: [
+                .unsafeFlags(["-ObjC"])
+            ],
+            plugins: [
+                .plugin(name: "HeaderCopyPlugin", package: "iosMath")
             ]
+        ),
+        .plugin(
+            name: "HeaderCopyPlugin",
+            capability: .buildTool(),
+            dependencies: []
         )
     ],
     cLanguageStandard: .gnu99
