@@ -25,12 +25,17 @@ let package = Package(
             resources: [
                 .copy("font")
             ],
-            publicHeadersPath: "lib",  // 根据项目结构可能需要调整
+            publicHeadersPath: "include",  // 将公共头文件路径改为include
             cSettings: [
+                // 扩展头文件搜索路径，确保所有可能的目录都被包含
+                .headerSearchPath("."),
                 .headerSearchPath("lib"),
                 .headerSearchPath("render"),
-                .headerSearchPath("render/internal"),  // 添加这个路径！
-                .headerSearchPath("font")
+                .headerSearchPath("render/internal"),
+                .headerSearchPath("font"),
+                .headerSearchPath("include"),
+                .headerSearchPath("include/render"),
+                .headerSearchPath("include/render/internal")
             ]
         )
     ],
