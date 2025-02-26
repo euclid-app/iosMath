@@ -18,18 +18,18 @@ let package = Package(
             name: "iosMath",
             path: "iosMath",
             exclude: [
-                "render/MTFontManager.m",  // 这个文件已经被弃用
-                "font/fontinfo.json",      // 排除不需要的资源
-                "info.plist",              // 排除不需要的文件
-                "lib/iosMath-prefix.pch"   // 排除预编译头文件
+                "render/MTFontManager.m",  // 如需要排除
+                "info.plist",
+                "lib/iosMath-prefix.pch"
             ],
             resources: [
-                .copy("font")  // 将font目录作为资源复制
+                .copy("font")
             ],
-            publicHeadersPath: "lib",
+            publicHeadersPath: "lib",  // 根据项目结构可能需要调整
             cSettings: [
                 .headerSearchPath("lib"),
                 .headerSearchPath("render"),
+                .headerSearchPath("render/internal"),  // 添加这个路径！
                 .headerSearchPath("font")
             ]
         )
